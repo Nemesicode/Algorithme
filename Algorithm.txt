@@ -1,0 +1,41 @@
+int main()
+{
+  while (get_word())
+    ;
+
+  cout 
+    << "words: " << word_count << endl
+    << "letters: " << letter_count;
+}
+
+int word_count, letter_count;
+
+bool get_word()
+{
+  char c;
+
+  // skip all characters except for letters and new-line
+  while (cin.get(c) && !isalpha(c) && '\n' != c)
+    ;
+
+  // did we reach the end of line?
+  if (!cin || '\n' == c)
+    return false; // we read all the words
+
+  //
+  string word{ c }; // add the first read character to word
+  while (cin.get(c) && isalpha(c)) // while the read character is a letter add it to the word
+    word += c;
+
+  // the last read character is not a letter, so put it back in stream
+  cin.putback(c);
+
+  // now we have a word: count it
+  ++word_count;
+
+  // count letters in word
+  letter_count += word.length();
+
+  // we still have words to read
+  return true;
+}
